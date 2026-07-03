@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block title %}Sign up — FoodCompass{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<header>
+    <a href="{{ url_for('views.index') }}" class="back">← Back</a>
+    <span class="eyebrow">FoodCompass</span>
+    <h1>Create your account</h1>
+</header>
+
+<div class="auth-shell">
+    <div class="auth-card">
+        <span class="role-pill" id="role-pill">{{ role|capitalize }}</span>
+        <h2>Sign up</h2>
+        <p class="auth-sub">A free account to {{ 'list food you have to give.' if role == 'donor' else ('pick up and deliver donations.' if role == 'volunteer' else 'claim food for the people you serve.') }}</p>
+
+        <div class="role-switch">
+            <a href="{{ url_for('auth.signup_page', role='donor') }}" class="{{ 'active' if role == 'donor' }}">Donor</a>
+            <a href="{{ url_for('auth.signup_page', role='volunteer') }}" class="{{ 'active' if role == 'volunteer' }}">Volunteer</a>
+            <a href="{{ url_for('auth.signup_page', role='organization') }}" class="{{ 'active' if role == 'organization' }}">Organization</a>
+        </div>
+
+        <form id="signup-form">
+            <div class="api-error" id="signup-error"></div>
+
+            <div class="field">
+                <label for="name">{{ 'Organization name' if role == 'organization' else 'Full name' }}</label>
+                <input type="text" id="name" required>
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" minlength="6" required>
+            </div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone">
+                </div>
+                <div class="field">
+                    <label for="address">{{ 'City / area' if role != 'organization' else 'Address' }}</label>
+                    <input type="text" id="address">
+                </div>
+            </div>
+
+            {% if role == 'organization' %}
+            <div class="field">
+                <label for="org_type">Organization type</label>
+                <select id="org_type">
+                    <option>NGO</option>
+                    <option>Orphanage</option>
+                    <option>Old Age Home</option>
+                    <option>Shelter</option>
+                    <option>Other</option>
+                </select>
+            </div>
+
+            <div class="field">
+                <label for="registration_note">Tell us about your organization</label>
+                <textarea id="registration_note" rows="3" placeholder="Registration number, how long you've operated, who you serve — this is reviewed before you can claim donations."></textarea>
+            </div>
+            {% endif %}
+
+            <input type="hidden" id="role" value="{{ role }}">
+            <button type="submit">Create account</button>
+        </form>
+
+        <p class="auth-footer-link">Already have an account? <a href="{{ url_for('auth.login_page', role=role) }}">Log in</a></p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById("signup-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    clearFormError(form);
+
+    const payload = {
+        name: document.getElementById("name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value,
+        phone: document.getElementById("phone").value.trim(),
+        address: document.getElementById("address").value.trim(),
+        role: document.getElementById("role").value,
+    };
+
+    const orgType = document.getElementById("org_type");
+    const regNote = document.getElementById("registration_note");
+    if (orgType) payload.org_type = orgType.value;
+    if (regNote) payload.registration_note = regNote.value.trim();
+
+    try {
+        const data = await api.post("/api/signup", payload);
+        window.location.href = data.redirect || "/";
+    } catch (err) {
+        showFormError(form, err.message);
+    }
+});
+</script>
+{% endblock %}

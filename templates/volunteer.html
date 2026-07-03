@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Volunteer Dashboard — FoodCompass{% endblock %}
+
+{% block content %}
+<header>
+    <a href="{{ url_for('views.index') }}" class="back">← Back</a>
+    <h1>Volunteer Dashboard</h1>
+</header>
+
+<div class="topbar">
+    <div class="who">{{ current_user.name }}</div>
+    <button class="logout-link" data-logout>Log out</button>
+</div>
+
+<section class="volunteer-section">
+    <h2>Pickups</h2>
+    <p class="section-sub">Claimed donations waiting for someone to carry them — sorted by how soon they expire.</p>
+    <div id="donations-list">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/volunteer.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Organization Verification — FoodCompass{% endblock %}
+
+{% block content %}
+<header>
+    <a href="{{ url_for('views.index') }}" class="back">← Back</a>
+    <h1>Organization Verification</h1>
+</header>
+
+<section class="admin-section">
+    <p class="section-sub">Demo verification panel — review and approve organizations so they can claim donations.</p>
+
+    {% if not orgs %}
+    <p class="state-message">No organizations have signed up yet.</p>
+    {% endif %}
+
+    {% for org in orgs %}
+    <div class="org-review-card" data-org-id="{{ org.id }}">
+        <div class="card-top">
+            <span class="food-name">{{ org.name }}</span>
+            <span class="status-pill {{ 'available' if org.verification_status == 'approved' else ('claimed' if org.verification_status == 'pending' else 'cancelled') }}">
+                {{ org.verification_status|replace('_', ' ')|capitalize }}
+            </span>
+        </div>
+        <div class="meta">
+            <span>🏷️ {{ org.org_type or "—" }}</span>
+            <span>✉️ {{ org.email }}</span>
+            {% if org.phone %}<span>📞 {{ org.phone }}</span>{% endif %}
+        </div>
+        <div class="org-note">{{ org.registration_note or "No registration details provided." }}</div>
+        {% if org.verification_status == 'pending' %}
+        <div class="card-actions">
+            <button class="btn-claim btn-approve" data-id="{{ org.id }}">Approve</button>
+            <button class="btn-ghost btn-reject" data-id="{{ org.id }}">Reject</button>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</section>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.querySelectorAll(".btn-approve, .btn-reject").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const decision = btn.classList.contains("btn-approve") ? "approved" : "rejected";
+    try {
+      await api.post(`/api/admin/organizations/${btn.dataset.id}/decide`, { decision });
+      showToast(`Organization ${decision}.`);
+      setTimeout(() => location.reload(), 700);
+    } catch (err) {
+      showToast(err.message);
+    }
+  });
+});
+</script>
+{% endblock %}

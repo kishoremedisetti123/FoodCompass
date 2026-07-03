@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block title %}Donor Dashboard — FoodCompass{% endblock %}
+
+{% block content %}
+<header>
+    <a href="{{ url_for('views.index') }}" class="back">← Back</a>
+    <h1>Donor Dashboard</h1>
+</header>
+
+<div class="topbar">
+    <div class="who">{{ current_user.name }}</div>
+    <button class="logout-link" data-logout>Log out</button>
+</div>
+
+<section class="donate-section">
+    <h2>Post a donation</h2>
+    <p class="section-sub">A few details is all a nearby organization needs to claim this.</p>
+
+    <form id="donation-form" novalidate>
+        <div class="api-error" id="donation-error"></div>
+
+        <div class="field">
+            <label for="foodType">What food is it?</label>
+            <input type="text" id="foodType" placeholder="e.g. Vegetable biryani, mixed fruit" required>
+        </div>
+
+        <div class="field-row">
+            <div class="field">
+                <label for="quantity">Quantity</label>
+                <input type="text" id="quantity" placeholder="e.g. 25 servings, 5 kg" required>
+            </div>
+            <div class="field">
+                <label for="expiry">Best before</label>
+                <input type="datetime-local" id="expiry" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="location">Pickup location</label>
+            <input type="text" id="location" placeholder="Street, area, landmark" required>
+        </div>
+
+        <div class="field">
+            <label for="notes">Notes (optional)</label>
+            <input type="text" id="notes" placeholder="e.g. Ring the back gate bell">
+        </div>
+
+        <button type="submit">Post donation</button>
+
+        <div class="form-feedback" id="form-feedback">
+            <span>✓</span>
+            <span>Donation posted — nearby organizations can now see it.</span>
+        </div>
+    </form>
+</section>
+
+<section class="donate-section" style="padding-top:0;">
+    <h2>Your donations</h2>
+    <p class="section-sub">Live status of everything you've posted.</p>
+    <div id="my-donations">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/donor.js') }}"></script>
+{% endblock %}

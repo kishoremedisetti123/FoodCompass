@@ -1,0 +1,752 @@
+/* ===========================================================
+   FoodCompass — design tokens
+   =========================================================== */
+:root {
+  /* color */
+  --ink:        #1F2D27;   /* deep forest-ink, near-black */
+  --ink-soft:   #3A4B43;
+  --parchment:  #FAF6EC;   /* warm parchment, not pure cream */
+  --parchment-dim: #F1ECDD;
+  --marigold:   #E8743B;   /* burnt-marigold accent */
+  --marigold-dark: #C95F28;
+  --sage:       #5B8C5A;   /* nourishment / accepted */
+  --rust:       #C2402F;   /* urgency / expiry */
+  --line:       rgba(31, 45, 39, 0.14);
+  --paper-shadow: rgba(31, 45, 39, 0.10);
+
+  /* type */
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* layout */
+  --radius: 14px;
+  --radius-sm: 8px;
+  --max-width: 1040px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--parchment);
+  color: var(--ink);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 64px; /* room for fixed footer */
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a { color: var(--marigold-dark); }
+
+:focus-visible {
+  outline: 3px solid var(--marigold);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ===========================================================
+   Header
+   =========================================================== */
+header {
+  position: relative;
+  background: var(--ink);
+  color: var(--parchment);
+  padding: 1.4rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  text-align: center;
+}
+
+header h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.01em;
+  margin: 0;
+}
+
+header .eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--marigold);
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.back {
+  position: absolute;
+  top: 50%;
+  left: 1.25rem;
+  transform: translateY(-50%);
+  color: var(--parchment);
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+
+.back:hover { opacity: 1; }
+
+/* ===========================================================
+   Landing page
+   =========================================================== */
+.landing-page header {
+  flex-direction: column;
+  padding: 3.5rem 1.5rem 3rem;
+  background: var(--ink);
+  overflow: hidden;
+}
+
+.landing-page header h1 {
+  font-size: clamp(2rem, 6vw, 3.1rem);
+  max-width: 14ch;
+  margin: 0 auto;
+}
+
+.tagline {
+  font-family: var(--font-body);
+  color: var(--parchment-dim);
+  opacity: 0.82;
+  max-width: 38ch;
+  margin: 0.85rem auto 0;
+  font-size: 0.98rem;
+}
+
+.route-mark {
+  width: 120px;
+  height: 48px;
+  margin: 1.4rem auto 0;
+}
+
+.user-selection {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2.75rem 1.5rem 3rem;
+}
+
+.user-selection h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-align: center;
+  color: var(--ink-soft);
+  margin: 0 0 1.75rem;
+}
+
+.role-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+}
+
+@media (max-width: 720px) {
+  .role-grid { grid-template-columns: 1fr; }
+}
+
+.role-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem 1.4rem;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  box-shadow: 0 1px 2px var(--paper-shadow);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  font-family: var(--font-body);
+}
+
+.role-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px var(--paper-shadow);
+  border-color: var(--marigold);
+}
+
+.role-card .role-icon {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 0.2rem;
+}
+
+.role-card .role-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.role-card .role-desc {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  opacity: 0.85;
+  line-height: 1.45;
+}
+
+.role-card .role-go {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--marigold-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.impact-strip {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+
+@media (max-width: 720px) {
+  .impact-strip { grid-template-columns: 1fr; }
+}
+
+.impact-strip .stat {
+  padding: 1rem;
+}
+
+.impact-strip .stat .num {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--marigold-dark);
+  font-weight: 600;
+}
+
+.impact-strip .stat .label {
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  opacity: 0.8;
+}
+
+/* ===========================================================
+   Section shells (donor / volunteer / organization pages)
+   =========================================================== */
+.donate-section,
+.volunteer-section,
+.organization-section {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+.donate-section h2,
+.volunteer-section h2,
+.organization-section h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0 0 0.4rem;
+}
+
+.section-sub {
+  color: var(--ink-soft);
+  opacity: 0.8;
+  font-size: 0.92rem;
+  margin: 0 0 1.75rem;
+}
+
+/* ===========================================================
+   Form
+   =========================================================== */
+form {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  text-align: left;
+  box-shadow: 0 1px 2px var(--paper-shadow);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  letter-spacing: 0.01em;
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--parchment);
+  color: var(--ink);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--marigold);
+  box-shadow: 0 0 0 3px rgba(232, 116, 59, 0.18);
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .field-row { grid-template-columns: 1fr; }
+}
+
+button, .btn {
+  background: var(--marigold-dark);
+  color: #fff;
+  border: none;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.3rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+
+button:hover, .btn:hover { background: var(--marigold); }
+button:active, .btn:active { transform: scale(0.98); }
+
+button.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+button.btn-ghost:hover {
+  background: var(--parchment-dim);
+}
+
+.btn-claim {
+  background: var(--sage);
+  font-size: 0.82rem;
+  padding: 0.45rem 0.9rem;
+}
+
+.btn-claim:hover { background: #4A7649; }
+
+/* form submit confirmation banner (replaces alert()) */
+.form-feedback {
+  display: none;
+  align-items: center;
+  gap: 0.55rem;
+  background: rgba(91, 140, 90, 0.12);
+  color: #3F6B3E;
+  border: 1px solid rgba(91, 140, 90, 0.35);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.form-feedback.show { display: flex; }
+
+/* ===========================================================
+   Donation / claim cards (volunteer + organization dashboards)
+   =========================================================== */
+.donation-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 0.9rem;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  box-shadow: 0 1px 2px var(--paper-shadow);
+}
+
+.donation-card .card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.donation-card .food-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.donation-card .meta {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  opacity: 0.85;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.donation-card .meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* freshness/urgency bar — encodes shelf-life pressure visually */
+.freshness {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.freshness .track {
+  flex: 1;
+  height: 6px;
+  border-radius: 4px;
+  background: var(--parchment-dim);
+  overflow: hidden;
+}
+
+.freshness .fill {
+  height: 100%;
+  border-radius: 4px;
+  background: var(--sage);
+}
+
+.freshness.urgent .fill { background: var(--rust); }
+.freshness.soon .fill { background: var(--marigold); }
+
+.freshness .fl-label {
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.freshness .fl-label { color: #4A7649; }
+.freshness.urgent .fl-label { color: var(--rust); }
+.freshness.soon .fl-label { color: var(--marigold-dark); }
+
+.donation-card .card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* loading / empty state */
+.state-message {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--ink-soft);
+  opacity: 0.75;
+  font-size: 0.9rem;
+}
+
+.skeleton {
+  background: linear-gradient(90deg, var(--parchment-dim) 25%, #fff 37%, var(--parchment-dim) 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: var(--radius);
+  height: 78px;
+  margin-bottom: 0.9rem;
+}
+
+@keyframes shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton { animation: none; }
+  .role-card, button, .btn { transition: none; }
+}
+
+/* ===========================================================
+   Footer
+   =========================================================== */
+footer {
+  text-align: center;
+  padding: 0.9rem;
+  background: var(--ink);
+  color: var(--parchment-dim);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  font-size: 0.78rem;
+  opacity: 0.92;
+}
+
+/* ===========================================================
+   Auth pages (signup / login)
+   =========================================================== */
+.auth-page {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-shell {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem 3rem;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 2rem;
+  box-shadow: 0 1px 2px var(--paper-shadow);
+}
+
+.auth-card .role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--parchment-dim);
+  color: var(--ink-soft);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.9rem;
+}
+
+.auth-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  margin: 0 0 0.3rem;
+}
+
+.auth-card .auth-sub {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  opacity: 0.8;
+  margin: 0 0 1.5rem;
+}
+
+.auth-card form {
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+.role-switch {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.4rem;
+}
+
+.role-switch a {
+  flex: 1;
+  text-align: center;
+  padding: 0.55rem 0.4rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--ink-soft);
+  transition: all 0.15s ease;
+}
+
+.role-switch a.active {
+  background: var(--ink);
+  color: var(--parchment);
+  border-color: var(--ink);
+}
+
+.auth-footer-link {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-top: 1.2rem;
+}
+
+.api-error {
+  display: none;
+  background: rgba(194, 64, 47, 0.1);
+  color: var(--rust);
+  border: 1px solid rgba(194, 64, 47, 0.3);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.api-error.show { display: block; }
+
+/* ===========================================================
+   Top bar for logged-in dashboards (name + logout)
+   =========================================================== */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem 0;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+.topbar .who {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.topbar .verify-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+}
+
+.verify-badge.approved { background: rgba(91,140,90,0.15); color: #3F6B3E; }
+.verify-badge.pending { background: rgba(232,116,59,0.15); color: var(--marigold-dark); }
+.verify-badge.rejected { background: rgba(194,64,47,0.12); color: var(--rust); }
+
+.logout-link {
+  background: none;
+  border: none;
+  color: var(--ink-soft);
+  text-decoration: underline;
+  font-size: 0.82rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ===========================================================
+   Status pills on donation cards
+   =========================================================== */
+.status-pill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.status-pill.available { background: rgba(91,140,90,0.15); color: #3F6B3E; }
+.status-pill.claimed { background: rgba(232,116,59,0.15); color: var(--marigold-dark); }
+.status-pill.picked_up { background: rgba(58,75,67,0.12); color: var(--ink-soft); }
+.status-pill.delivered { background: rgba(31,45,39,0.85); color: var(--parchment); }
+.status-pill.cancelled { background: rgba(194,64,47,0.12); color: var(--rust); }
+
+.donation-card .card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.donation-card .card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* verification pending notice on org dashboard */
+.notice {
+  border-radius: var(--radius);
+  padding: 1rem 1.2rem;
+  font-size: 0.88rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid;
+}
+
+.notice.pending {
+  background: rgba(232,116,59,0.08);
+  border-color: rgba(232,116,59,0.3);
+  color: var(--marigold-dark);
+}
+
+.notice.rejected {
+  background: rgba(194,64,47,0.08);
+  border-color: rgba(194,64,47,0.3);
+  color: var(--rust);
+}
+
+/* ===========================================================
+   Admin verification panel
+   =========================================================== */
+.admin-section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+.org-review-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.4rem;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.org-review-card .org-note {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  background: var(--parchment);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  margin: 0.6rem 0 0.9rem;
+}
+
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--parchment);
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}

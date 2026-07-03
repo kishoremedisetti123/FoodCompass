@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}FoodCompass — Surplus food, given a direction{% endblock %}
+{% block body_class %}landing-page{% endblock %}
+
+{% block content %}
+<header>
+    <span class="eyebrow">FoodCompass</span>
+    <h1>Surplus food, given a direction.</h1>
+    <p class="tagline">Connecting the kitchen with extra to the doorstep with need — before the clock runs out.</p>
+
+    <svg class="route-mark" viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A route connecting a donation point to a recipient point">
+        <path d="M10 38 C 30 38, 35 12, 60 12 S 95 38, 110 10" fill="none" stroke="#E8743B" stroke-width="2" stroke-dasharray="1 7" stroke-linecap="round"/>
+        <circle cx="10" cy="38" r="5" fill="#5B8C5A"/>
+        <circle cx="110" cy="10" r="5" fill="#FAF6EC" stroke="#E8743B" stroke-width="2"/>
+    </svg>
+</header>
+
+<section class="user-selection">
+    {% if current_user.is_authenticated %}
+        <h2>Welcome back, {{ current_user.name }}</h2>
+        <div class="role-grid" style="grid-template-columns: 1fr;">
+            <button class="role-card" onclick="location.href='{{ url_for('views.role_redirect') }}'">
+                <span class="role-title">Go to your dashboard</span>
+                <span class="role-desc">Continue as {{ current_user.role }}.</span>
+                <span class="role-go">Open dashboard →</span>
+            </button>
+        </div>
+    {% else %}
+        <h2>Select your role to continue</h2>
+        <div class="role-grid">
+            <button class="role-card" onclick="location.href='{{ url_for('auth.login_page', role='donor') }}'">
+                <svg class="role-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <rect x="4" y="11" width="26" height="17" rx="3" stroke="#E8743B" stroke-width="2"/>
+                    <path d="M9 11V9a8 8 0 0 1 16 0v2" stroke="#E8743B" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M9 18h16M9 22h10" stroke="#E8743B" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span class="role-title">I'm a Donor</span>
+                <span class="role-desc">List food you have ready to give — restaurant, event, or home kitchen.</span>
+                <span class="role-go">Continue →</span>
+            </button>
+
+            <button class="role-card" onclick="location.href='{{ url_for('auth.login_page', role='volunteer') }}'">
+                <svg class="role-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="17" cy="13" r="6" stroke="#E8743B" stroke-width="2"/>
+                    <path d="M5 29c0-5.5 5.4-10 12-10s12 4.5 12 10" stroke="#E8743B" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span class="role-title">I'm a Volunteer</span>
+                <span class="role-desc">Pick up nearby donations and carry them where they're needed.</span>
+                <span class="role-go">Continue →</span>
+            </button>
+
+            <button class="role-card" onclick="location.href='{{ url_for('auth.login_page', role='organization') }}'">
+                <svg class="role-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M17 4 6 9v6c0 8 5 13.5 11 15 6-1.5 11-7 11-15V9L17 4Z" stroke="#E8743B" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M12.5 17.5 16 21l6-7" stroke="#E8743B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span class="role-title">I'm an Organization</span>
+                <span class="role-desc">NGOs, shelters and care homes claiming food for the people they serve.</span>
+                <span class="role-go">Continue →</span>
+            </button>
+        </div>
+    {% endif %}
+</section>
+
+<section class="impact-strip" aria-label="Why this matters">
+    <div class="stat">
+        <div class="num">40%</div>
+        <div class="label">of food produced daily goes to waste</div>
+    </div>
+    <div class="stat">
+        <div class="num">68.8M t</div>
+        <div class="label">food wasted by Indian households each year</div>
+    </div>
+    <div class="stat">
+        <div class="num">820M+</div>
+        <div class="label">people facing hunger worldwide</div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}

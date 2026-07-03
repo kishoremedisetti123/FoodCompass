@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Organization Dashboard — FoodCompass{% endblock %}
+
+{% block content %}
+<header>
+    <a href="{{ url_for('views.index') }}" class="back">← Back</a>
+    <h1>Organization Dashboard</h1>
+</header>
+
+<div class="topbar">
+    <div class="who">
+        {{ current_user.name }}
+        {% if current_user.verification_status == 'approved' %}
+            <span class="verify-badge approved">Verified</span>
+        {% elif current_user.verification_status == 'pending' %}
+            <span class="verify-badge pending">Pending review</span>
+        {% elif current_user.verification_status == 'rejected' %}
+            <span class="verify-badge rejected">Not approved</span>
+        {% endif %}
+    </div>
+    <button class="logout-link" data-logout>Log out</button>
+</div>
+
+<section class="organization-section">
+    {% if current_user.verification_status == 'pending' %}
+    <div class="notice pending">
+        Your organization is awaiting verification. You can browse what's available, but claiming opens once an admin approves your registration.
+    </div>
+    {% elif current_user.verification_status == 'rejected' %}
+    <div class="notice rejected">
+        Your organization's verification wasn't approved. Reach out for details on what's missing.
+    </div>
+    {% endif %}
+
+    <h2>Available donations</h2>
+    <p class="section-sub">Claim what you can use — a volunteer will be assigned for pickup.</p>
+    <div id="available-donations">
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+        <div class="skeleton"></div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>window.ORG_VERIFIED = {{ 'true' if current_user.is_verified_org else 'false' }};</script>
+<script src="{{ url_for('static', filename='js/organization.js') }}"></script>
+{% endblock %}

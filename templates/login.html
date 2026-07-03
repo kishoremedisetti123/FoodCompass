@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Log in — FoodCompass{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+
+{% block content %}
+<header>
+    <a href="{{ url_for('views.index') }}" class="back">← Back</a>
+    <span class="eyebrow">FoodCompass</span>
+    <h1>Welcome back</h1>
+</header>
+
+<div class="auth-shell">
+    <div class="auth-card">
+        <span class="role-pill">{{ role|capitalize }}</span>
+        <h2>Log in</h2>
+        <p class="auth-sub">Pick up where you left off.</p>
+
+        <div class="role-switch">
+            <a href="{{ url_for('auth.login_page', role='donor') }}" class="{{ 'active' if role == 'donor' }}">Donor</a>
+            <a href="{{ url_for('auth.login_page', role='volunteer') }}" class="{{ 'active' if role == 'volunteer' }}">Volunteer</a>
+            <a href="{{ url_for('auth.login_page', role='organization') }}" class="{{ 'active' if role == 'organization' }}">Organization</a>
+        </div>
+
+        <form id="login-form">
+            <div class="api-error" id="login-error"></div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <button type="submit">Log in</button>
+        </form>
+
+        <p class="auth-footer-link">New here? <a href="{{ url_for('auth.signup_page', role=role) }}">Create an account</a></p>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2026 FoodCompass</p>
+</footer>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    clearFormError(form);
+
+    const payload = {
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value,
+    };
+
+    try {
+        const data = await api.post("/api/login", payload);
+        window.location.href = data.redirect || "/";
+    } catch (err) {
+        showFormError(form, err.message);
+    }
+});
+</script>
+{% endblock %}
